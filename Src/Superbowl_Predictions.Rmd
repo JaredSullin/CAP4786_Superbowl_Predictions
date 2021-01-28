@@ -1,0 +1,70 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+data <- read.csv("superbowl.csv")
+data
+
+
+
+data$Winner.Team.Id <- as.factor(data$Winner.Team.Id)
+data$Loser.Team.Id <- as.factor(data$Loser.Team.Id)
+
+```
+
+```{r}
+g<- ggplot(data = data, aes(MVP))+
+  stat_count(show.legend = TRUE, aes(color =Winner.Pts, fill = State)) +
+  labs(title = "Superbowl Wins MVP vs. WINS ",
+       subtitle = "1967 to 2020's ",
+       x = "MVP",
+       y = "Wins") +
+  theme(panel.background = element_blank())
+
+g + theme(axis.text.x = element_text(angle = 90))
+  
+```
+
+#Kansas City Chiefs have both won more and participated in more total Super Bowls #than the Tampa Bay Buccaneers. but the buccaneers have a chance if they can read the #chiefs mvp
+
+```{r}
+ggplot(data = data, aes(Stadium)) + 
+  stat_count(show.legend = TRUE, aes(color = Loser.Pts, fill = Loser.Team.Id)) +
+  labs(title = "Superbowl Losses based on location",
+       subtitle = "1967 - 2020",
+       x = "Stadium",
+       y = "Losses",
+       caption = "Source: Kaggle") +
+  coord_flip() +
+  theme(panel.background = element_blank())
+
+  
+```
+#based on the location the most losses occur in the rose bowl, orange bow, and #louisiana super dome. from that i can see that florida as a state usually sees more #wins than kansas overall.
+
+
+
+
+```{r}
+bp <- ggplot(data, aes(x="", y=Winner.Pts, fill=State)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0)
+
+print(bp + ggtitle("Superbowl Winners Points 1967 - 2020")+ xlab("States") + ylab("Winners.pts"))
+```
+#I believe Florida will win the because of the overall experience they have over the #buccaneers. we can expect a good match and honestly its anyones game.
+
+#But if i had to say i would like to say the buccaneers overall will win the super #bowl
+
+
+
+
+
